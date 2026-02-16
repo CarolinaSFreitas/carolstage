@@ -39,6 +39,8 @@ import { NotificationsPage } from '@backstage/plugin-notifications';
 import { SignalsDisplay } from '@backstage/plugin-signals';
 import { HomePage } from './components/home/HomePage';
 import { HomepageCompositionRoot } from '@backstage/plugin-home';
+import { UnifiedThemeProvider } from '@backstage/theme';
+import { carolstageTheme } from './components/themes/customTheme';
 
 const app = createApp({
   apis,
@@ -62,6 +64,16 @@ const app = createApp({
   components: {
     SignInPage: props => <SignInPage {...props} auto providers={['guest']} />,
   },
+  themes: [
+    {
+      id: 'carolstage-dark',
+      title: 'Carolstage',
+      variant: 'dark',
+      Provider: ({ children }) => (
+        <UnifiedThemeProvider theme={carolstageTheme} children={children} />
+      )
+    }
+  ]
 });
 
 const routes = (
