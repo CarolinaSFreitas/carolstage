@@ -12,7 +12,7 @@ export const carolstageTheme = createUnifiedTheme({
       ...palettes.dark,
 
       primary: {
-        main: '#1DB954',      // verde Spotify
+        main: '#1DB954',
         light: '#1ED760',
         dark: '#14833B',
         contrastText: '#000000',
@@ -26,8 +26,8 @@ export const carolstageTheme = createUnifiedTheme({
       },
 
       background: {
-        default: '#121212',   // fundo Spotify
-        paper: '#181818',     // cards
+        default: '#121212',
+        paper: '#181818',
       },
 
       error: { main: '#E22134' },
@@ -59,12 +59,12 @@ export const carolstageTheme = createUnifiedTheme({
     },
   }),
 
-pageTheme: {
-  home: genPageTheme({
-    colors: ['#1F1F1F', '#121212'],
-    shape: 'round',
-  }),
-},
+  pageTheme: {
+    home: genPageTheme({
+      colors: ['#1F1F1F', '#121212'],
+      shape: 'round',
+    }),
+  },
 
   components: {
     MuiCssBaseline: {
@@ -78,7 +78,7 @@ pageTheme: {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 20, // Spotify usa botão arredondado
+          borderRadius: 20,
           textTransform: 'none',
           fontWeight: 700,
         },
