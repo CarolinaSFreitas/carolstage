@@ -19,7 +19,7 @@
 * Criar arquivo de tema
 * Aplicar novo tema em `App.tsx`
 
-### \[ ] 4. Customização de componentes
+### \[X] 4. Customização de componentes
 
 * Adicionar `styleOverrides` nos componentes desejados
 * Exemplo com `MuiCard`
