@@ -88,6 +88,11 @@ catalog:
       rules:
         - allow: [Template]
 
+    - type: file
+      target: ../../catalog/readme/template.yaml
+      rules:
+        - allow: [Template]
+
     # Local example organizational data
     - type: file
       target: ../../examples/org.yaml

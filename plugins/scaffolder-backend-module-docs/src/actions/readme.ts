@@ -14,10 +14,12 @@ export function readmeAction() {
               "Nome do projeto/repositório, usado para criar o README.md. Exemplo: 'my-awesome-project'",
           }),
         projectStack: z =>
-          z.enum(['Node.js', 'Python', 'Java', 'Rails', 'Go'], {
-            description:
-              "Stack de desenvolvimento do projeto, usada para personalizar o README.md. Exemplo: 'Node.js'",
-          }), 
+          z
+            .string({ description: "Stack do projeto" })
+            .trim()
+            .refine(v => ['Node.js', 'Python', 'Java', 'Rails', 'Go', '.net'].includes(v), {
+              message: "projectStack precisa ser um de: Node.js, Python, Java, Rails, Go",
+            }),
       },
     },
     async handler(ctx) {
@@ -26,7 +28,7 @@ export function readmeAction() {
       );
 
       if (ctx.input.projectName === 'xpto') {
-        throw new Error(`projectName cannot be 'foo'`);
+        throw new Error(`projectName cannot be 'xpto'`);
       }
 
       await new Promise(resolve => setTimeout(resolve, 1000));

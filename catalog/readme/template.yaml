@@ -2,9 +2,38 @@ apiVersion: scaffolder.backstage.io/v1beta3
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
 kind: Template
 metadata:
-  name: example-nodejs-template
-  title: Example Node.js Template
-  description: An example template for the scaffolder that creates a simple Node.js service
+  name: documentation-readme
+  title: Documentation README Template
+  description: Essa oferta gera READMEs para documentação de projetos.
 spec:
   owner: user:guest
-  type: service
+  type: documentation
+
+  parameters:
+    - title: Dados do Projeto
+      required:
+        - name
+        - language
+      properties:
+        name:
+          title: Project Name
+          type: string
+          description: Nome do projeto
+        language:
+          title: Project Stack
+          type: string
+          description: Stack do projeto
+          enum:
+            - Node.js
+            - Python
+            - Java
+            - Rails
+            - Go
+
+  steps:
+    - id: doc-readme-validation
+      name: Normalização de README
+      action: docs:readme
+      input:
+        projectName: ${{ parameters.name }}
+        projectStack: ${{ parameters.language }}
