@@ -386,3 +386,107 @@ Isso transforma o Scaffolder não apenas em ferramenta de criação, mas em um o
 
 ---
 
+# 📦 Yarn Workspace no Backstage
+## 🧩 Contexto
+
+O Backstage usa monorepo com Yarn Workspaces.
+
+Isso significa que um único repositório contém vários pacotes internos, geralmente:
+
+````
+packages/
+  app/       → Frontend
+  backend/   → Backend
+````
+
+Cada pasta dentro de `packages/` é um workspace independente.
+
+## 🔎 Comando explicado
+``yarn workspace app add @backstage/plugin-scaffolder-react```-> O que significa cada parte:
+1. ``yarn workspace app``
+  - Executa o comando dentro do workspace chamado app, ou seja, dentro de: `packages/app`
+2. ``add``
+  - Instala uma dependência.
+3. ``@backstage/plugin-scaffolder-react``
+  - É o plugin do Scaffolder (parte frontend/UI)
+
+# 🎯 O que esse comando faz na prática
+1. Instala o plugin no frontend
+2. Atualiza ``packages/app/package.json``
+3. Não altera o backend
+4. Não instala globalmente no projeto inteiro
+
+# 🔌 Plugin Frontend vs Backend no Backstage
+
+## Plugin Frontend
+
+- Interface visual do Backstage
+- Componentes React
+- Rotas da UI
+  - Exemplo: ``@backstage/plugin-scaffolder-react``
+
+## Plugin Backend
+
+- Executa lógica
+- Processa tasks
+- Integra com APIs externas
+  - Exemplo: ``@backstage/plugin-scaffolder-backend``
+---
+
+# enum vs Json no Backstage (Scaffolder)
+## 🎯 Quando usar enum
+O enum funciona bem quando:
+- O número de opções é pequeno
+- As opções são estáveis
+- A lista é simples
+
+### Exemplos:
+- Linguagem (Node.js, Python, Java)
+- Cloud provider (AWS, Azure, GCP)
+- Tipo de serviço
+
+### 📌 Vantagem:
+- Simples
+- Direto no YAML
+- Fácil manutenção
+
+## ⚠️ Quando o enum começa a não valer a pena
+Se:
+- A lista de opções cresce muito
+- O YAML começa a ficar extenso e difícil de manter
+- As opções mudam com frequência
+- A lista precisa vir de uma fonte dinâmica
+Nesse caso, manter tudo no enum deixa o template:
+  - Verboso
+  - Difícil de ler
+  - Difícil de atualizar
+
+### 🚀 Melhor alternativa nesses casos
+- Importar os dados de outro lugar, como:
+- Um arquivo JSON externo
+- Uma API
+- Uma fonte dinâmica
+- Um catálogo interno
+
+### 📌 Isso torna o template:
+- Mais limpo
+- Mais escalável
+- Mais fácil de manter
+
+**Tip:**
+1. Usar enum para listas pequenas e estáticas.
+2. Usar JSON ou fonte externa quando a lista for grande, dinâmica ou complexa.
+
+---
+
+# Lembretes:
+1. ``packages/app/src/App.tsx`` -> onde faz roteamento; adicionar subcomponentes na página
+2. Criando novidade com scaffolder -> cria o tsx, pro front, traz pro roteamento no App.tsx e adiciona no template.yaml e depois de montar esse skeleton, termina a regra de negócio.
+3. Backstage tá [usando a versão 4 do material ui](https://v4.mui.com/pt/getting-started/installation/?_gl=1*e4mydd*_up*MQ..*_ga*NDA4NDA0OTUxLjE3NzIzMTMwODc.*_ga_5NXDQLC2ZK*czE3NzIzMTMwODYkbzEkZzAkdDE3NzIzMTMwODYkajYwJGwwJGgw)
+4. Sempre que for integrar com API externa, é IDEAL, que dentro do ``app-config.yaml`` procurar o ``proxy:`` e fazer o mapeamento da API externa do proxy.
+  - exemplo feito com a api de times
+  - dessa forma, toda autenticação que o backstage fizer, pra acessar a rota vai ter que passar pela autenticação, NÃO VAI FICAR EXPOSTA.
+  - também é possível passar HEADERS (ex: api do servicenow, etc)
+  - integração com estas ferramentas (como servicenow), **criar um arquivo pra organizar as chamadas**
+5. Arquivo ``packages/app/src/apis.ts`` serve pra que sempre que fizer uma implementação de consumo de api externa, precisa registrar nesse arquivo, como foi no caso da api simples de times.
+  - esse registro é feito trazendo ``createApiFactory`` que contém: ``api:`` e ``deps:``

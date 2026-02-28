@@ -12,9 +12,15 @@ spec:
   parameters:
     - title: Dados do Projeto
       required:
+        - team
         - name
         - language
       properties:
+        team:
+          title: Squad
+          type: string
+          description: Squad responsável
+          ui:field: TeamSelect
         name:
           title: Project Name
           type: string
@@ -37,4 +43,5 @@ spec:
       action: docs:readme
       input:
         projectName: ${{ parameters.name }}
+        projectTeam: ${{ parameters.team }}
         projectStack: ${{ parameters.language }}

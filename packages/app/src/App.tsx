@@ -41,6 +41,8 @@ import { HomePage } from './components/home/HomePage';
 import { HomepageCompositionRoot } from '@backstage/plugin-home';
 import { UnifiedThemeProvider } from '@backstage/theme';
 import { carolstageTheme } from './components/themes/customTheme';
+import { ScaffolderFieldExtensions } from '@backstage/plugin-scaffolder-react';
+import { TeamSelectExtension } from './scaffolder/TeamSelectExtension';
 
 const app = createApp({
   apis,
@@ -97,7 +99,11 @@ const routes = (
         <ReportIssue />
       </TechDocsAddons>
     </Route>
-    <Route path="/create" element={<ScaffolderPage />} />
+    <Route path="/create" element={<ScaffolderPage />}>
+      <ScaffolderFieldExtensions>
+        <TeamSelectExtension />
+      </ScaffolderFieldExtensions>
+    </Route>
     <Route path="/api-docs" element={<ApiExplorerPage />} />
     <Route
       path="/catalog-import"
