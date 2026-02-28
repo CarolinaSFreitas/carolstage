@@ -29,6 +29,7 @@ spec:
             - Java
             - Rails
             - Go
+            - .net
 
   steps:
     - id: doc-readme-validation

@@ -14,18 +14,19 @@ export function readmeAction() {
               "Nome do projeto/repositório, usado para criar o README.md. Exemplo: 'my-awesome-project'",
           }),
         projectStack: z =>
-          z
-            .string({ description: "Stack do projeto" })
-            .trim()
-            .refine(v => ['Node.js', 'Python', 'Java', 'Rails', 'Go', '.net'].includes(v), {
-              message: "projectStack precisa ser um de: Node.js, Python, Java, Rails, Go",
+          z.preprocess(
+            v => (typeof v === 'string' ? v.trim() : v),
+            z.enum(['Node.js', 'Python', 'Java', 'Rails', 'Go'], {
+              description: 'Stack do projeto',
             }),
+          ),
       },
     },
     async handler(ctx) {
       ctx.logger.info(
         `Running example template with parameters: ${ctx.input.projectName}`,
       );
+      ctx.logger.info(`INPUT: ${JSON.stringify(ctx.input)}`);
 
       if (ctx.input.projectName === 'xpto') {
         throw new Error(`projectName cannot be 'xpto'`);
