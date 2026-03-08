@@ -11,6 +11,7 @@ import {
 
 import { discoveryApiRef, fetchApiRef } from '@backstage/core-plugin-api';
 import { teamApiRef, createTeamApi } from './services/teamService';
+import { chatbotApiRef, createChatbotApi } from '@internal/backstage-plugin-chatbot';
 
 export const apis: AnyApiFactory[] = [
   createApiFactory({
@@ -24,6 +25,13 @@ export const apis: AnyApiFactory[] = [
     deps: { discoveryApi: discoveryApiRef, fetchApi: fetchApiRef },
     factory: ({ discoveryApi, fetchApi }) =>
       createTeamApi(discoveryApi, fetchApi),
+  }),
+
+  createApiFactory({
+    api: chatbotApiRef,
+    deps: { discoveryApi: discoveryApiRef, fetchApi: fetchApiRef },
+    factory: ({ discoveryApi, fetchApi }) =>
+      createChatbotApi(discoveryApi, fetchApi),
   }),
 
   ScmAuth.createDefaultApiFactory(),

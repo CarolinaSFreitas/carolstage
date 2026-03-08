@@ -490,3 +490,66 @@ Nesse caso, manter tudo no enum deixa o template:
   - integração com estas ferramentas (como servicenow), **criar um arquivo pra organizar as chamadas**
 5. Arquivo ``packages/app/src/apis.ts`` serve pra que sempre que fizer uma implementação de consumo de api externa, precisa registrar nesse arquivo, como foi no caso da api simples de times.
   - esse registro é feito trazendo ``createApiFactory`` que contém: ``api:`` e ``deps:``
+
+---
+
+# 3 Abordagens de Integração no Backstage
+
+## A — Frontend → Sistema Externo (❌ Menos recomendada)
+
+O plugin no frontend chama diretamente um sistema externo.
+
+**Características**
+- Requisições feitas diretamente do browser para APIs externas.
+- Não passa pelo backend do Backstage.
+
+**Problemas**
+- Pode expor tokens ou credenciais.
+- Problemas de CORS.
+- Difícil implementar autenticação, cache, logging ou retry.
+- Lógica de integração fica espalhada no frontend.
+
+**Quando usar**
+- Protótipos rápidos.
+- APIs públicas sem autenticação.
+
+---
+
+## B — Frontend → Backstage Proxy → Sistema Externo (✅ Recomendado)
+
+O plugin chama o Backstage Proxy, que encaminha a requisição para o sistema externo.
+
+**Características**
+- O frontend fala apenas com o backend do Backstage.
+- O proxy faz a chamada para o serviço externo.
+
+**Vantagens**
+- Mais seguro (tokens não ficam no frontend).
+- Permite centralizar autenticação.
+- Possibilita logging e cache.
+- Reduz problemas de CORS.
+
+**Quando usar**
+- Integrações simples com APIs externas.
+- Quando não é necessário criar lógica complexa no backend.
+
+---
+
+## C — Frontend → Plugin Backend → DB / Serviços (✅ Recomendado para casos complexos)
+
+Cria-se um backend plugin próprio para lidar com a lógica da integração.
+
+**Características**
+- O frontend chama um backend plugin do Backstage.
+- Esse plugin pode acessar bancos, APIs ou outros serviços.
+
+**Vantagens**
+- Arquitetura mais escalável.
+- Permite regras de negócio complexas.
+- Integração com banco de dados.
+- Melhor controle de auth, cache e observabilidade.
+
+**Quando usar**
+- Integrações complexas.
+- Necessidade de persistência de dados.
+- Processamentos ou regras específicas.

@@ -43,6 +43,7 @@ import { UnifiedThemeProvider } from '@backstage/theme';
 import { carolstageTheme } from './components/themes/customTheme';
 import { ScaffolderFieldExtensions } from '@backstage/plugin-scaffolder-react';
 import { TeamSelectExtension } from './scaffolder/TeamSelectExtension';
+import { ChatbotPage } from '@internal/backstage-plugin-chatbot';
 
 const app = createApp({
   apis,
@@ -119,6 +120,7 @@ const routes = (
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
     <Route path="/notifications" element={<NotificationsPage />} />
+    <Route path="/chatbot" element={<ChatbotPage />} />
   </FlatRoutes>
 );
 
