@@ -44,6 +44,7 @@ import { carolstageTheme } from './components/themes/customTheme';
 import { ScaffolderFieldExtensions } from '@backstage/plugin-scaffolder-react';
 import { TeamSelectExtension } from './scaffolder/TeamSelectExtension';
 import { ChatbotPage } from '@internal/backstage-plugin-chatbot';
+import { githubAuthApiRef } from '@backstage/core-plugin-api';
 
 const app = createApp({
   apis,
@@ -65,7 +66,12 @@ const app = createApp({
     });
   },
   components: {
-    SignInPage: props => <SignInPage {...props} auto providers={['guest']} />,
+    SignInPage: props => <SignInPage {...props} auto providers={['guest', {
+      id: 'github',
+      title: 'GitHub',
+      message: 'Sign in usando GitHub',
+      apiRef: githubAuthApiRef,
+    }]} />,
   },
   themes: [
     {

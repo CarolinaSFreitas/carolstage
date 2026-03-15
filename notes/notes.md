@@ -1,5 +1,4 @@
 # 📘 Notas — Backstage (Templates, Actions e Scaffolder)
-
 ---
 
 # 🧠 Fluxo Geral do Template
@@ -8,8 +7,7 @@
 2. O template executa os **steps**
 3. Cada step executa uma **action**
 
-Resumo mental:
-
+**Resumo mental:**  
 Parameters → Steps → Actions
 
 ---
@@ -553,3 +551,46 @@ Cria-se um backend plugin próprio para lidar com a lógica da integração.
 - Integrações complexas.
 - Necessidade de persistência de dados.
 - Processamentos ou regras específicas.
+
+---
+
+## 📦 `yarn backstage-cli create-github-app`
+
+Esse comando é usado dentro de um projeto **Backstage** para criar automaticamente um **GitHub App** que o Backstage utilizará para integrar com o **GitHub**.
+
+Ele faz parte da **CLI oficial do Backstage**.
+
+---
+
+## 🧠 O que esse comando faz
+
+Quando você executa:
+
+```bash
+yarn backstage-cli create-github-app
+```
+
+a CLI:
+
+- Cria um GitHub App na sua organização ou conta.
+- Configura permissões necessárias para o Backstage acessar repositórios.
+- Gera credenciais do app (como App ID e chave privada).
+- Atualiza automaticamente o arquivo de configuração do Backstage (`app-config.yaml`).
+
+Ou seja, ele automatiza todo o processo de integração entre Backstage e GitHub.
+
+⚙️ **Para que isso serve no Backstage**
+
+O GitHub App permite que o Backstage:
+
+- 📂 Ler repositórios
+- 🧾 Criar repositórios
+- 🔄 Abrir Pull Requests
+- 📜 Ler arquivos como catalog-info.yaml
+- 🧩 Usar templates do Software Templates
+- 🔍 Descobrir serviços automaticamente
+
+Sem isso, o Backstage não consegue interagir com o GitHub de forma segura.
+
+----
+
